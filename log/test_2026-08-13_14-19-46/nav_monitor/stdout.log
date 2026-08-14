@@ -1,0 +1,49 @@
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+cachedir: /home/taneesh/Nav2_Assessment_ws/build/nav_monitor/.pytest_cache
+rootdir: /home/taneesh/Nav2_Assessment_ws/src/nav_monitor
+plugins: ament-pep257-0.17.5, ament-copyright-0.17.5, launch-testing-ros-0.26.11, ament-flake8-0.17.5, ament-lint-0.17.5, launch-testing-3.4.10, ament-xmllint-0.17.5, colcon-core-0.20.1, cov-4.1.0, typeguard-4.1.5
+[1mcollecting ... [0m[1m
+collected 3 items                                                              [0m
+
+test/test_copyright.py [33ms[0m[32m                                                 [ 33%][0m
+test/test_flake8.py [31mF[0m[31m                                                    [ 66%][0m
+test/test_pep257.py [32m.[0m[31m                                                    [100%][0m
+
+=================================== FAILURES ===================================
+[31m[1m_________________________________ test_flake8 __________________________________[0m
+[1m[31mtest/test_flake8.py[0m:27: in test_flake8
+    [94massert[39;49;00m rc == [94m0[39;49;00m, \
+[1m[31mE   AssertionError: Found 2 code style errors / warnings:[0m
+[1m[31mE     ./nav_monitor/monitor.py:19:1: I100 Import statements are in the wrong order. 'from geometry_msgs.msg import PoseStamped' should be before 'from rclpy.node import Node'[0m
+[1m[31mE     ./nav_monitor/monitor.py:20:1: I100 Import statements are in the wrong order. 'from action_msgs.msg import GoalStatusArray' should be before 'from geometry_msgs.msg import PoseStamped'[0m
+[1m[31mE   assert 1 == 0[0m
+----------------------------- Captured stdout call -----------------------------
+
+./nav_monitor/monitor.py:19:1: I100 Import statements are in the wrong order. 'from geometry_msgs.msg import PoseStamped' should be before 'from rclpy.node import Node'
+from geometry_msgs.msg import PoseStamped
+^
+
+./nav_monitor/monitor.py:20:1: I100 Import statements are in the wrong order. 'from action_msgs.msg import GoalStatusArray' should be before 'from geometry_msgs.msg import PoseStamped'
+from action_msgs.msg import GoalStatusArray
+^
+
+2     I100 Import statements are in the wrong order. 'from geometry_msgs.msg import PoseStamped' should be before 'from rclpy.node import Node'
+
+6 files checked
+2 errors
+
+'I'-type errors: 2
+
+Checked files:
+
+* ./setup.py
+* ./nav_monitor/__init__.py
+* ./nav_monitor/monitor.py
+* ./test/test_pep257.py
+* ./test/test_copyright.py
+* ./test/test_flake8.py
+- generated xml file: /home/taneesh/Nav2_Assessment_ws/build/nav_monitor/pytest.xml -
+[36m[1m=========================== short test summary info ============================[0m
+[31mFAILED[0m test/test_flake8.py::[1mtest_flake8[0m - AssertionError: Found 2 code style errors / warnings:
+[31m==================== [31m[1m1 failed[0m, [32m1 passed[0m, [33m1 skipped[0m[31m in 0.22s[0m[31m ====================[0m

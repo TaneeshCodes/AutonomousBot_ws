@@ -1,0 +1,52 @@
+[0.284s] Invoking command in '/home/taneesh/Nav2_Assessment_ws/src/assessment_launch': AMENT_PREFIX_PATH=/home/taneesh/Nav2_Assessment_ws/install/assessment_launch:/home/taneesh/Nav2_Assessment_ws/install/nav_monitor:/home/taneesh/Humanoid_ws/install/robot_communication:/home/taneesh/Humanoid_ws/install/humanoid_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/taneesh/Nav2_Assessment_ws/build/assessment_launch/pytest.xml --junit-prefix=assessment_launch -o cache_dir=/home/taneesh/Nav2_Assessment_ws/build/assessment_launch/.pytest_cache PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/taneesh/Nav2_Assessment_ws/build/assessment_launch:/home/taneesh/Nav2_Assessment_ws/install/assessment_launch/lib/python3.12/site-packages:/home/taneesh/Nav2_Assessment_ws/build/nav_monitor:/home/taneesh/Nav2_Assessment_ws/install/nav_monitor/lib/python3.12/site-packages:/home/taneesh/Humanoid_ws/build/robot_communication:/home/taneesh/Humanoid_ws/install/robot_communication/lib/python3.12/site-packages:/home/taneesh/Humanoid_ws/build/humanoid_controller:/home/taneesh/Humanoid_ws/install/humanoid_controller/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/python3 -m pytest
+[0.777s] [1m============================= test session starts ==============================[0m
+[0.777s] platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+[0.785s] cachedir: /home/taneesh/Nav2_Assessment_ws/build/assessment_launch/.pytest_cache
+[0.785s] rootdir: /home/taneesh/Nav2_Assessment_ws/src/assessment_launch
+[0.785s] plugins: ament-pep257-0.17.5, ament-copyright-0.17.5, launch-testing-ros-0.26.11, ament-flake8-0.17.5, ament-lint-0.17.5, launch-testing-3.4.10, ament-xmllint-0.17.5, colcon-core-0.20.1, cov-4.1.0, typeguard-4.1.5
+[0.884s] [1mcollecting ... [0m[1m
+[0.884s] collected 3 items                                                              [0m
+[0.885s] 
+[0.888s] test/test_copyright.py [33ms[0m[32m                                                 [ 33%][0m
+[1.030s] test/test_flake8.py [31mF[0m[31m                                                    [ 66%][0m
+[1.044s] test/test_pep257.py [32m.[0m[31m                                                    [100%][0m
+[1.044s] 
+[1.044s] =================================== FAILURES ===================================
+[1.044s] [31m[1m_________________________________ test_flake8 __________________________________[0m
+[1.044s] [1m[31mtest/test_flake8.py[0m:26: in test_flake8
+[1.078s]     [94massert[39;49;00m rc == [94m0[39;49;00m, \
+[1.078s] [1m[31mE   AssertionError: Found 2 code style errors / warnings:[0m
+[1.078s] [1m[31mE     ./launch/assessment.launch.py:9:1: E302 expected 2 blank lines, found 1[0m
+[1.078s] [1m[31mE     ./launch/assessment.launch.py:33:100: E501 line too long (101 > 99 characters)[0m
+[1.078s] [1m[31mE   assert 1 == 0[0m
+[1.078s] ----------------------------- Captured stdout call -----------------------------
+[1.078s] 
+[1.078s] ./launch/assessment.launch.py:9:1: E302 expected 2 blank lines, found 1
+[1.078s] def generate_launch_description():
+[1.078s] ^
+[1.078s] 
+[1.079s] ./launch/assessment.launch.py:33:100: E501 line too long (101 > 99 characters)
+[1.079s]     # 2. Navigation2 launch (includes AMCL localization, planner, controller, bt_navigator, and RViz)
+[1.079s]                                                                                                    ^
+[1.079s] 
+[1.079s] 1     E302 expected 2 blank lines, found 1
+[1.079s] 1     E501 line too long (101 > 99 characters)
+[1.079s] 
+[1.079s] 6 files checked
+[1.079s] 2 errors
+[1.079s] 
+[1.079s] 'E'-type errors: 2
+[1.079s] 
+[1.079s] Checked files:
+[1.079s] 
+[1.079s] * ./setup.py
+[1.079s] * ./launch/assessment.launch.py
+[1.079s] * ./assessment_launch/__init__.py
+[1.079s] * ./test/test_pep257.py
+[1.079s] * ./test/test_copyright.py
+[1.079s] * ./test/test_flake8.py
+[1.080s] - generated xml file: /home/taneesh/Nav2_Assessment_ws/build/assessment_launch/pytest.xml -
+[1.080s] [36m[1m=========================== short test summary info ============================[0m
+[1.080s] [31mFAILED[0m test/test_flake8.py::[1mtest_flake8[0m - AssertionError: Found 2 code style errors / warnings:
+[1.080s] [31m==================== [31m[1m1 failed[0m, [32m1 passed[0m, [33m1 skipped[0m[31m in 0.30s[0m[31m ====================[0m
+[1.148s] Invoked command in '/home/taneesh/Nav2_Assessment_ws/src/assessment_launch' returned '1': AMENT_PREFIX_PATH=/home/taneesh/Nav2_Assessment_ws/install/assessment_launch:/home/taneesh/Nav2_Assessment_ws/install/nav_monitor:/home/taneesh/Humanoid_ws/install/robot_communication:/home/taneesh/Humanoid_ws/install/humanoid_controller:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/taneesh/Nav2_Assessment_ws/build/assessment_launch/pytest.xml --junit-prefix=assessment_launch -o cache_dir=/home/taneesh/Nav2_Assessment_ws/build/assessment_launch/.pytest_cache PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/taneesh/Nav2_Assessment_ws/build/assessment_launch:/home/taneesh/Nav2_Assessment_ws/install/assessment_launch/lib/python3.12/site-packages:/home/taneesh/Nav2_Assessment_ws/build/nav_monitor:/home/taneesh/Nav2_Assessment_ws/install/nav_monitor/lib/python3.12/site-packages:/home/taneesh/Humanoid_ws/build/robot_communication:/home/taneesh/Humanoid_ws/install/robot_communication/lib/python3.12/site-packages:/home/taneesh/Humanoid_ws/build/humanoid_controller:/home/taneesh/Humanoid_ws/install/humanoid_controller/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/python3 -m pytest

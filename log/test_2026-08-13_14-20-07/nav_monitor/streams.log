@@ -1,0 +1,16 @@
+[0.401s] Invoking command in '/home/taneesh/Nav2_Assessment_ws/src/nav_monitor': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/taneesh/Nav2_Assessment_ws/build/nav_monitor/pytest.xml --junit-prefix=nav_monitor -o cache_dir=/home/taneesh/Nav2_Assessment_ws/build/nav_monitor/.pytest_cache PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m pytest
+[0.699s] [1m============================= test session starts ==============================[0m
+[0.699s] platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+[0.701s] cachedir: /home/taneesh/Nav2_Assessment_ws/build/nav_monitor/.pytest_cache
+[0.701s] rootdir: /home/taneesh/Nav2_Assessment_ws/src/nav_monitor
+[0.701s] plugins: ament-pep257-0.17.5, ament-copyright-0.17.5, launch-testing-ros-0.26.11, ament-flake8-0.17.5, ament-lint-0.17.5, launch-testing-3.4.10, ament-xmllint-0.17.5, colcon-core-0.20.1, cov-4.1.0, typeguard-4.1.5
+[0.756s] [1mcollecting ... [0m[1m
+[0.756s] collected 3 items                                                              [0m
+[0.756s] 
+[0.760s] test/test_copyright.py [33ms[0m[32m                                                 [ 33%][0m
+[0.855s] test/test_flake8.py [32m.[0m[32m                                                    [ 66%][0m
+[0.871s] test/test_pep257.py [32m.[0m[32m                                                    [100%][0m
+[0.872s] 
+[0.872s] - generated xml file: /home/taneesh/Nav2_Assessment_ws/build/nav_monitor/pytest.xml -
+[0.872s] [32m========================= [32m[1m2 passed[0m, [33m1 skipped[0m[32m in 0.17s[0m[32m =========================[0m
+[0.924s] Invoked command in '/home/taneesh/Nav2_Assessment_ws/src/nav_monitor' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/taneesh/Nav2_Assessment_ws/build/nav_monitor/pytest.xml --junit-prefix=nav_monitor -o cache_dir=/home/taneesh/Nav2_Assessment_ws/build/nav_monitor/.pytest_cache PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m pytest

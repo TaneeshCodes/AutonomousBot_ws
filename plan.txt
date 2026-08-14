@@ -1,0 +1,139 @@
+NAV2 ASSESSMENT – PHASE BY PHASE IMPLEMENTATION PLAN
+
+Workspace:
+~/Nav2_Assessment_ws
+
+==================================================
+PHASE 0 — ENVIRONMENT SETUP
+==================================================
+
+Objective:
+- Create isolated ROS 2 workspace
+- Verify TurtleBot3, Gazebo & Nav2 installation
+- Build workspace successfully
+
+Deliverables:
+- assessment_launch package
+- nav_monitor package
+- Successful colcon build
+
+==================================================
+PHASE 1 — SIMULATION BRINGUP
+==================================================
+
+Launch Order:
+1. Gazebo
+2. TurtleBot3 World
+3. Navigation2
+4. RViz
+
+Tasks:
+- Spawn TurtleBot3 Burger
+- Verify /scan and /odom
+- Load map
+- Verify TF tree
+- Test teleop
+
+Success:
+- Robot moves manually
+- Localization works
+
+==================================================
+PHASE 2 — NAVIGATION ACTIVATION
+==================================================
+
+Tasks:
+- Initialize AMCL using 2D Pose Estimate
+- Activate lifecycle nodes
+- Verify planner_server
+- Verify controller_server
+- Verify bt_navigator
+- Send first Nav2 Goal
+
+Success:
+- Robot reaches destination autonomously
+
+==================================================
+PHASE 3 — NAV_MONITOR NODE
+==================================================
+
+Package:
+nav_monitor
+
+Create:
+monitor.py
+
+Responsibilities:
+- Subscribe to /odom
+- Read robot position
+- Calculate travelled distance
+- Print live X, Y & distance
+- Detect navigation completion
+
+==================================================
+PHASE 4 — METRICS & LOGGING
+==================================================
+
+Track:
+- Total distance travelled
+- Goal completion time
+- Current position
+- Navigation status
+
+Console Example:
+
+Position: (1.23, -0.45)
+Distance: 3.42 m
+Status: Navigating
+
+==================================================
+PHASE 5 — TESTING
+==================================================
+
+Test Cases:
+1. Short goal
+2. Long goal
+3. Multiple goals
+4. Recovery behavior
+
+Validate:
+- Accurate distance
+- Successful navigation
+- Stable execution
+
+==================================================
+PHASE 6 — FINAL SUBMISSION
+==================================================
+
+Project Structure:
+
+Nav2_Assessment_ws/
+├── src/
+│   ├── assessment_launch/
+│   └── nav_monitor/
+├── README.md
+├── launch/
+├── screenshots/
+└── demo.mp4
+
+Include:
+- Source code
+- Launch commands
+- Build instructions
+- Screenshots
+- Demo video
+
+==================================================
+EXECUTION ORDER
+==================================================
+
+Phase 0 → Setup
+Phase 1 → Simulation
+Phase 2 → Navigation
+Phase 3 → Monitor Node
+Phase 4 → Metrics
+Phase 5 → Testing
+Phase 6 → Submission
+
+Rule:
+Complete one phase fully before moving to the next.

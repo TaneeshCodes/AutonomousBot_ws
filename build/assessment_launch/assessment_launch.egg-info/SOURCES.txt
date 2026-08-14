@@ -1,0 +1,13 @@
+package.xml
+setup.cfg
+setup.py
+assessment_launch/__init__.py
+assessment_launch.egg-info/PKG-INFO
+assessment_launch.egg-info/SOURCES.txt
+assessment_launch.egg-info/dependency_links.txt
+assessment_launch.egg-info/requires.txt
+assessment_launch.egg-info/top_level.txt
+assessment_launch.egg-info/zip-safe
+launch/assessment.launch.py
+param/burger.yaml
+resource/assessment_launch

@@ -1,0 +1,13 @@
+package.xml
+setup.cfg
+setup.py
+nav_monitor/__init__.py
+nav_monitor/monitor.py
+nav_monitor.egg-info/PKG-INFO
+nav_monitor.egg-info/SOURCES.txt
+nav_monitor.egg-info/dependency_links.txt
+nav_monitor.egg-info/entry_points.txt
+nav_monitor.egg-info/requires.txt
+nav_monitor.egg-info/top_level.txt
+nav_monitor.egg-info/zip-safe
+resource/nav_monitor

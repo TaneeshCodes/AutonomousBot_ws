@@ -1,0 +1,2 @@
+[console_scripts]
+monitor_node = nav_monitor.monitor:main

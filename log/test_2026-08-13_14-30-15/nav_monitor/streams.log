@@ -1,0 +1,16 @@
+[0.242s] Invoking command in '/home/taneesh/Nav2_Assessment_ws/src/nav_monitor': AMENT_PREFIX_PATH=/home/taneesh/Nav2_Assessment_ws/install/nav_monitor:${AMENT_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/taneesh/Nav2_Assessment_ws/build/nav_monitor/pytest.xml --junit-prefix=nav_monitor -o cache_dir=/home/taneesh/Nav2_Assessment_ws/build/nav_monitor/.pytest_cache PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/taneesh/Nav2_Assessment_ws/build/nav_monitor:/home/taneesh/Nav2_Assessment_ws/install/nav_monitor/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -m pytest
+[0.542s] [1m============================= test session starts ==============================[0m
+[0.542s] platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+[0.545s] cachedir: /home/taneesh/Nav2_Assessment_ws/build/nav_monitor/.pytest_cache
+[0.545s] rootdir: /home/taneesh/Nav2_Assessment_ws/src/nav_monitor
+[0.545s] plugins: ament-pep257-0.17.5, ament-copyright-0.17.5, launch-testing-ros-0.26.11, ament-flake8-0.17.5, ament-lint-0.17.5, launch-testing-3.4.10, ament-xmllint-0.17.5, colcon-core-0.20.1, cov-4.1.0, typeguard-4.1.5
+[0.600s] [1mcollecting ... [0m[1m
+[0.600s] collected 3 items                                                              [0m
+[0.600s] 
+[0.605s] test/test_copyright.py [33ms[0m[32m                                                 [ 33%][0m
+[0.723s] test/test_flake8.py [32m.[0m[32m                                                    [ 66%][0m
+[0.740s] test/test_pep257.py [32m.[0m[32m                                                    [100%][0m
+[0.741s] 
+[0.741s] - generated xml file: /home/taneesh/Nav2_Assessment_ws/build/nav_monitor/pytest.xml -
+[0.741s] [32m========================= [32m[1m2 passed[0m, [33m1 skipped[0m[32m in 0.20s[0m[32m =========================[0m
+[0.808s] Invoked command in '/home/taneesh/Nav2_Assessment_ws/src/nav_monitor' returned '0': AMENT_PREFIX_PATH=/home/taneesh/Nav2_Assessment_ws/install/nav_monitor:${AMENT_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/taneesh/Nav2_Assessment_ws/build/nav_monitor/pytest.xml --junit-prefix=nav_monitor -o cache_dir=/home/taneesh/Nav2_Assessment_ws/build/nav_monitor/.pytest_cache PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/taneesh/Nav2_Assessment_ws/build/nav_monitor:/home/taneesh/Nav2_Assessment_ws/install/nav_monitor/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -m pytest
