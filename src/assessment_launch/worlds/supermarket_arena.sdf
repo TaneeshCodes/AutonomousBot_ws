@@ -1,0 +1,273 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="supermarket_arena">
+
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"></plugin>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"></plugin>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"></plugin>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+          <material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================ -->
+    <!-- STORE FLOOR : light tile-colored floor sized to the arena      -->
+    <!-- ============================================================ -->
+    <model name="store_floor">
+      <static>true</static>
+      <pose>0 0 0.001 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>6 8 0.001</size></box></geometry>
+          <material><ambient>0.85 0.85 0.8 1</ambient><diffuse>0.85 0.85 0.8 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Entrance mat, marks the doorway on the south wall -->
+    <model name="entrance_mat">
+      <static>true</static>
+      <pose>0 -3.85 0.002 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>1.0 0.3 0.001</size></box></geometry>
+          <material><ambient>0.6 0.1 0.1 1</ambient><diffuse>0.6 0.1 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================ -->
+    <!-- SQUARE(ish) BOUNDARY WALLS : 6m x 8m footprint, 250mm tall     -->
+    <!-- with a 1m entrance gap in the south wall                       -->
+    <!-- ============================================================ -->
+    <model name="arena_walls">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+
+      <link name="wall_north">
+        <pose>0 4 0.125 0 0 0</pose>
+        <collision name="collision"><geometry><box><size>6.1 0.1 0.25</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>6.1 0.1 0.25</size></box></geometry>
+          <material><ambient>0.55 0.55 0.6 1</ambient><diffuse>0.55 0.55 0.6 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="wall_south_west">
+        <pose>-1.75 -4 0.125 0 0 0</pose>
+        <collision name="collision"><geometry><box><size>2.5 0.1 0.25</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>2.5 0.1 0.25</size></box></geometry>
+          <material><ambient>0.55 0.55 0.6 1</ambient><diffuse>0.55 0.55 0.6 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="wall_south_east">
+        <pose>1.75 -4 0.125 0 0 0</pose>
+        <collision name="collision"><geometry><box><size>2.5 0.1 0.25</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>2.5 0.1 0.25</size></box></geometry>
+          <material><ambient>0.55 0.55 0.6 1</ambient><diffuse>0.55 0.55 0.6 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="wall_east">
+        <pose>3 0 0.125 0 0 0</pose>
+        <collision name="collision"><geometry><box><size>0.1 8.1 0.25</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>0.1 8.1 0.25</size></box></geometry>
+          <material><ambient>0.55 0.55 0.6 1</ambient><diffuse>0.55 0.55 0.6 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="wall_west">
+        <pose>-3 0 0.125 0 0 0</pose>
+        <collision name="collision"><geometry><box><size>0.1 8.1 0.25</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>0.1 8.1 0.25</size></box></geometry>
+          <material><ambient>0.55 0.55 0.6 1</ambient><diffuse>0.55 0.55 0.6 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================ -->
+    <!-- AISLE SHELVING : 4 rows, brown shelf color, with a yellow      -->
+    <!-- hanging aisle sign above each row + aisle numbers via color    -->
+    <!-- Rows run north-south walkway on the far right (cross-aisle)    -->
+    <!-- ============================================================ -->
+
+    <model name="aisle_row_1">
+      <static>true</static>
+      <pose>-0.5 2.5 0.125 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>3.2 0.3 0.25</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>3.2 0.3 0.25</size></box></geometry>
+          <material><ambient>0.45 0.28 0.12 1</ambient><diffuse>0.45 0.28 0.12 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="aisle_sign_1">
+      <static>true</static>
+      <pose>-0.5 2.5 0.28 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>3.0 0.1 0.06</size></box></geometry>
+          <material><ambient>0.95 0.8 0.05 1</ambient><diffuse>0.95 0.8 0.05 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="aisle_row_2">
+      <static>true</static>
+      <pose>-0.5 1.0 0.125 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>3.2 0.3 0.25</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>3.2 0.3 0.25</size></box></geometry>
+          <material><ambient>0.45 0.28 0.12 1</ambient><diffuse>0.45 0.28 0.12 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="aisle_sign_2">
+      <static>true</static>
+      <pose>-0.5 1.0 0.28 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>3.0 0.1 0.06</size></box></geometry>
+          <material><ambient>0.95 0.8 0.05 1</ambient><diffuse>0.95 0.8 0.05 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="aisle_row_3">
+      <static>true</static>
+      <pose>-0.5 -0.5 0.125 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>3.2 0.3 0.25</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>3.2 0.3 0.25</size></box></geometry>
+          <material><ambient>0.45 0.28 0.12 1</ambient><diffuse>0.45 0.28 0.12 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="aisle_sign_3">
+      <static>true</static>
+      <pose>-0.5 -0.5 0.28 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>3.0 0.1 0.06</size></box></geometry>
+          <material><ambient>0.95 0.8 0.05 1</ambient><diffuse>0.95 0.8 0.05 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="aisle_row_4">
+      <static>true</static>
+      <pose>-0.5 -2.0 0.125 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>3.2 0.3 0.25</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>3.2 0.3 0.25</size></box></geometry>
+          <material><ambient>0.45 0.28 0.12 1</ambient><diffuse>0.45 0.28 0.12 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="aisle_sign_4">
+      <static>true</static>
+      <pose>-0.5 -2.0 0.28 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>3.0 0.1 0.06</size></box></geometry>
+          <material><ambient>0.95 0.8 0.05 1</ambient><diffuse>0.95 0.8 0.05 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================ -->
+    <!-- CHECKOUT COUNTERS : near the entrance, silver/gray             -->
+    <!-- ============================================================ -->
+    <model name="checkout_1">
+      <static>true</static>
+      <pose>-1.6 -3.2 0.125 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.5 0.25</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>0.8 0.5 0.25</size></box></geometry>
+          <material><ambient>0.75 0.75 0.78 1</ambient><diffuse>0.75 0.75 0.78 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="checkout_2">
+      <static>true</static>
+      <pose>1.6 -3.2 0.125 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.5 0.25</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>0.8 0.5 0.25</size></box></geometry>
+          <material><ambient>0.75 0.75 0.78 1</ambient><diffuse>0.75 0.75 0.78 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================ -->
+    <!-- TROLLEY / BASKET RETURN AREA : near the entrance, blue         -->
+    <!-- ============================================================ -->
+    <model name="trolley_area">
+      <static>true</static>
+      <pose>-2.5 -3.5 0.125 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.6 0.6 0.25</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>0.6 0.6 0.25</size></box></geometry>
+          <material><ambient>0.1 0.3 0.7 1</ambient><diffuse>0.1 0.3 0.7 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================ -->
+    <!-- START MARKER : flat green circle at the entrance, visual-only -->
+    <!-- Spawn your gazebo bot at this same x,y                        -->
+    <!-- ============================================================ -->
+    <model name="start_marker">
+      <static>true</static>
+      <pose>0 -3.5 0.003 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.25</radius><length>0.002</length></cylinder></geometry>
+          <material>
+            <ambient>0.1 0.9 0.1 1</ambient>
+            <diffuse>0.1 0.9 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
