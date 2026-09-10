@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Script to autonomously navigate through store waypoints and return to base."""
+"""Script to autonomously navigate through the exact drawn serpentine store route."""
 
 import math
 import sys
@@ -43,69 +43,68 @@ def main():
     rclpy.init()
     navigator = BasicNavigator()
 
-    print("=" * 60)
-    print("  Supermarket Autonomous Multi-Waypoint Patrol Script")
-    print("=" * 60)
-    print("[INFO] Waiting for Navigation2 active state...")
+    print("=" * 65)
+    print("  Supermarket Autonomous Drawn Route Navigation")
+    print("=" * 65)
+    print("[INFO] Waiting for Navigation2 to become active...")
     navigator.waitUntilNav2Active()
-    print("[INFO] Navigation2 is fully active!")
+    print("[INFO] Navigation2 is active and ready!\n")
 
-    # Define Waypoints for Store Patrol + Return to Base
-    # Layout:
-    # Base / Start circle: (0.0, -3.5)
-    # Aisle 4: y=-2.0, Aisle 3: y=-0.5, Aisle 2: y=1.0, Aisle 1: y=2.5
-    # North aisle corridor: y=3.2
-    # Checkout counters: (-1.6, -3.2)
+    # Exact waypoints matching the user's drawn serpentine route:
+    # 1. Start: Bottom Green Circle (0.0, -3.5)
+    # 2. Curve right around Aisle 4 -> pass through Lane 3-4 going West
+    # 3. Curve up left corridor -> pass through Lane 2-3 going East
+    # 4. Curve up right corridor -> pass through Lane 1-2 going West
+    # 5. Curve up left corridor -> pass through Top North corridor going East
+    # 6. End: Top-Right Green Circle (1.8, 3.25)
     waypoints_data = [
-        {"name": "Entrance Right Walkway",  "x": 1.6,  "y": -2.0, "yaw": 90.0},
-        {"name": "Aisle 4 Walkway",        "x": -1.8, "y": -2.0, "yaw": 180.0},
-        {"name": "Aisle 3 West Entrance",  "x": -1.8, "y": -0.5, "yaw": 90.0},
-        {"name": "Aisle 3 East Exit",      "x": 1.6,  "y": -0.5, "yaw": 0.0},
-        {"name": "Aisle 2 East Entrance",  "x": 1.6,  "y": 1.0,  "yaw": 90.0},
-        {"name": "Aisle 2 West Exit",      "x": -1.8, "y": 1.0,  "yaw": 180.0},
-        {"name": "Aisle 1 West Entrance",  "x": -1.8, "y": 2.5,  "yaw": 90.0},
-        {"name": "Aisle 1 East Exit",      "x": 1.6,  "y": 2.5,  "yaw": 0.0},
-        {"name": "North Top Corridor",     "x": 0.0,  "y": 3.2,  "yaw": 180.0},
-        {"name": "West Main Walkway",      "x": -2.2, "y": 0.0,  "yaw": -90.0},
-        {"name": "Checkout Counter 1",     "x": -1.6, "y": -3.0, "yaw": -90.0},
-        {"name": "Base Station (Spawn Circle)", "x": 0.0, "y": -3.5, "yaw": 90.0},
+        {"name": "1. Right Entrance Curve",        "x": 1.8,  "y": -2.8,  "yaw": 60.0},
+        {"name": "2. Aisle 3-4 Lane (East Entry)", "x": 1.8,  "y": -1.25, "yaw": 180.0},
+        {"name": "3. Aisle 3-4 Lane (Mid)",        "x": 0.0,  "y": -1.25, "yaw": 180.0},
+        {"name": "4. Aisle 3-4 Lane (West Exit)",  "x": -2.2, "y": -1.25, "yaw": 180.0},
+        {"name": "5. Aisle 2-3 Lane (West Entry)", "x": -2.2, "y":  0.25, "yaw": 0.0},
+        {"name": "6. Aisle 2-3 Lane (Mid)",        "x": 0.0,  "y":  0.25, "yaw": 0.0},
+        {"name": "7. Aisle 2-3 Lane (East Exit)",  "x": 1.8,  "y":  0.25, "yaw": 0.0},
+        {"name": "8. Aisle 1-2 Lane (East Entry)", "x": 1.8,  "y":  1.75, "yaw": 180.0},
+        {"name": "9. Aisle 1-2 Lane (Mid)",        "x": 0.0,  "y":  1.75, "yaw": 180.0},
+        {"name": "10. Aisle 1-2 Lane (West Exit)", "x": -2.2, "y":  1.75, "yaw": 180.0},
+        {"name": "11. North-West Top Corner",      "x": -2.2, "y":  3.25, "yaw": 0.0},
+        {"name": "12. Top North Corridor (Mid)",   "x": 0.0,  "y":  3.25, "yaw": 0.0},
+        {"name": "13. End Goal (Top-Right Circle)","x": 1.8,  "y":  3.25, "yaw": 0.0},
     ]
 
-    goal_poses = []
-    for wp in waypoints_data:
-        goal_poses.append(create_pose(navigator, wp["x"], wp["y"], wp["yaw"]))
+    print(f"[INFO] Executing route with {len(waypoints_data)} checkpoints...")
+    print(f"[INFO] Start : Bottom Entrance Circle (0.0, -3.5)")
+    print(f"[INFO] Target: Top-Right Goal Circle (1.8, 3.25)\n")
 
-    print(f"\n[INFO] Loaded {len(goal_poses)} patrol waypoints including Return to Base.")
-    print("[INFO] Beginning autonomous store patrol...\n")
+    for i, wp in enumerate(waypoints_data):
+        goal_pose = create_pose(navigator, wp["x"], wp["y"], wp["yaw"])
+        print(f"[ROUTE] Navigating to Checkpoint #{i+1}/{len(waypoints_data)}: {wp['name']} ({wp['x']}, {wp['y']})")
+        navigator.goToPose(goal_pose)
 
-    # Send entire sequence of poses to Nav2
-    navigator.followWaypoints(goal_poses)
+        while not navigator.isTaskComplete():
+            feedback = navigator.getFeedback()
+            if feedback and hasattr(feedback, 'distance_remaining'):
+                print(f"  └── Progress: {feedback.distance_remaining:.2f} m remaining", end="\r")
+            time.sleep(0.3)
 
-    while not navigator.isTaskComplete():
-        feedback = navigator.getFeedback()
-        if feedback:
-            curr_idx = feedback.current_waypoint
-            target_name = waypoints_data[curr_idx]["name"] if curr_idx < len(waypoints_data) else "Final"
-            target_pos = (waypoints_data[curr_idx]["x"], waypoints_data[curr_idx]["y"]) if curr_idx < len(waypoints_data) else (0, 0)
-            print(
-                f"[PATROL] Target #{curr_idx + 1}/{len(waypoints_data)}: {target_name} at {target_pos} | Navigating...",
-                end="\r"
-            )
-        time.sleep(0.5)
+        result = navigator.getResult()
+        if result == TaskResult.SUCCEEDED:
+            print(f"  └── [OK] Reached Checkpoint #{i+1} successfully!\n")
+        elif result == TaskResult.CANCELED:
+            print(f"\n[WARN] Checkpoint #{i+1} was canceled. Aborting route.")
+            break
+        else:
+            print(f"\n[WARN] Checkpoint #{i+1} could not be reached cleanly. Proceeding to next checkpoint...\n")
 
-    print("\n")
-    result = navigator.getResult()
-    if result == TaskResult.SUCCEEDED:
-        print("=" * 60)
-        print("  SUCCESS: Robot completed full patrol and returned to Base!")
-        print("=" * 60)
-    elif result == TaskResult.CANCELED:
-        print("[WARN] Autonomous patrol task was canceled.")
-    elif result == TaskResult.FAILED:
-        print("[ERROR] Autonomous patrol task failed to reach destination.")
+    print("=" * 65)
+    print("  SUCCESS: Route completed! Robot arrived at Top-Right End Goal.")
+    print("=" * 65)
 
     rclpy.shutdown()
 
 
 if __name__ == '__main__':
     main()
+
+

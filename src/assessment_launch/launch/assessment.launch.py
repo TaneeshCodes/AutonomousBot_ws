@@ -56,6 +56,7 @@ def generate_launch_description():
     x_pose = LaunchConfiguration('x_pose', default='0.0')
     y_pose = LaunchConfiguration('y_pose', default='-3.5')
     z_pose = LaunchConfiguration('z_pose', default='0.01')
+    yaw_pose = LaunchConfiguration('yaw_pose', default='1.5708')
 
     map_yaml_file = LaunchConfiguration(
         'map',
@@ -90,16 +91,33 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': use_sim_time}.items()
     )
 
-    # 4. Spawn TurtleBot3 at the circle marker position (0.0, -3.5)
-    spawn_turtlebot_cmd = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(gazebo_dir, 'launch', 'spawn_turtlebot3.launch.py')
-        ),
-        launch_arguments={
-            'x_pose': x_pose,
-            'y_pose': y_pose,
-            'z_pose': z_pose
-        }.items()
+    # 4. Direct Gazebo Spawner with explicit yaw orientation (-Y)
+    urdf_path = os.path.join(models_dir, 'turtlebot3_burger', 'model.sdf')
+    bridge_params = os.path.join(gazebo_dir, 'params', 'turtlebot3_burger_bridge.yaml')
+
+    start_gazebo_ros_spawner_cmd = Node(
+        package='ros_gz_sim',
+        executable='create',
+        arguments=[
+            '-name', 'burger',
+            '-file', urdf_path,
+            '-x', x_pose,
+            '-y', y_pose,
+            '-z', z_pose,
+            '-Y', yaw_pose
+        ],
+        output='screen',
+    )
+
+    start_gazebo_ros_bridge_cmd = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=[
+            '--ros-args',
+            '-p',
+            f'config_file:={bridge_params}',
+        ],
+        output='screen',
     )
 
     # 5. Navigation2 Bringup with autonomous navigation enabled
@@ -157,6 +175,11 @@ def generate_launch_description():
             description='Robot spawn Y position (circle marker)'
         ),
         DeclareLaunchArgument(
+            'yaw_pose',
+            default_value='1.5708',
+            description='Robot spawn yaw orientation angle (rad)'
+        ),
+        DeclareLaunchArgument(
             'map',
             default_value=map_yaml_file,
             description='Full path to map yaml file to load'
@@ -168,9 +191,11 @@ def generate_launch_description():
         ),
         gzserver_cmd,
         gzclient_cmd,
-        spawn_turtlebot_cmd,
+        start_gazebo_ros_spawner_cmd,
+        start_gazebo_ros_bridge_cmd,
         robot_state_publisher_cmd,
         navigation_stack,
         rviz_cmd
     ])
+
 
