@@ -252,8 +252,7 @@
     </model>
 
     <!-- ============================================================ -->
-    <!-- START MARKER : flat green circle at the entrance, visual-only -->
-    <!-- Spawn your gazebo bot at this same x,y                        -->
+    <!-- START & GOAL MARKERS                                          -->
     <!-- ============================================================ -->
     <model name="start_marker">
       <static>true</static>
@@ -264,6 +263,275 @@
           <material>
             <ambient>0.1 0.9 0.1 1</ambient>
             <diffuse>0.1 0.9 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="goal_marker">
+      <static>true</static>
+      <pose>1.8 3.25 0.003 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.25</radius><length>0.002</length></cylinder></geometry>
+          <material>
+            <ambient>0.1 0.9 0.1 1</ambient>
+            <diffuse>0.1 0.9 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================ -->
+    <!-- ARUCO MARKERS (0 to 11) MOUNTED ON STANDS / PEDESTALS / WALLS  -->
+    <!-- ============================================================ -->
+    <!-- Marker 0: South Entrance Waypoint (Facing South on Pedestal Stand) -->
+    <model name="aruco_marker_0">
+      <static>true</static>
+      <pose>1.8 -2.2 0 0 0 0</pose>
+      <link name="link">
+        <visual name="stand">
+          <pose>0 0 0.125 0 0 0</pose>
+          <geometry><box><size>0.26 0.12 0.25</size></box></geometry>
+          <material><ambient>0.3 0.3 0.35 1</ambient><diffuse>0.3 0.3 0.35 1</diffuse></material>
+        </visual>
+        <visual name="marker_plate">
+          <pose>0 -0.061 0.15 0 0 0</pose>
+          <geometry><box><size>0.22 0.002 0.22</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+            <pbr><metal><albedo_map>/home/arc_aiml/AutonomousBot_ws/src/assessment_launch/textures/marker_0.png</albedo_map></metal></pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Marker 1: Aisle 4 Entrance Marker (Facing East on Pedestal Stand) -->
+    <model name="aruco_marker_1">
+      <static>true</static>
+      <pose>1.8 -1.25 0 0 0 0</pose>
+      <link name="link">
+        <visual name="stand">
+          <pose>0 0 0.125 0 0 0</pose>
+          <geometry><box><size>0.12 0.26 0.25</size></box></geometry>
+          <material><ambient>0.3 0.3 0.35 1</ambient><diffuse>0.3 0.3 0.35 1</diffuse></material>
+        </visual>
+        <visual name="marker_plate">
+          <pose>0.061 0 0.15 0 0 -1.5708</pose>
+          <geometry><box><size>0.22 0.002 0.22</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+            <pbr><metal><albedo_map>/home/arc_aiml/AutonomousBot_ws/src/assessment_launch/textures/marker_1.png</albedo_map></metal></pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Marker 2: Lane 3-4 Mid Corridor Guide (Facing East on West Wall Plaque) -->
+    <model name="aruco_marker_2">
+      <static>true</static>
+      <pose>-2.94 -1.25 0 0 0 0</pose>
+      <link name="link">
+        <visual name="wall_plaque">
+          <pose>0 0 0.15 0 0 0</pose>
+          <geometry><box><size>0.02 0.26 0.26</size></box></geometry>
+          <material><ambient>0.25 0.25 0.28 1</ambient><diffuse>0.25 0.25 0.28 1</diffuse></material>
+        </visual>
+        <visual name="marker_plate">
+          <pose>0.011 0 0.15 0 0 -1.5708</pose>
+          <geometry><box><size>0.22 0.002 0.22</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+            <pbr><metal><albedo_map>/home/arc_aiml/AutonomousBot_ws/src/assessment_launch/textures/marker_2.png</albedo_map></metal></pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Marker 3: West Aisle 4 Exit Marker (Facing South on Pedestal Stand) -->
+    <model name="aruco_marker_3">
+      <static>true</static>
+      <pose>-2.2 -0.66 0 0 0 0</pose>
+      <link name="link">
+        <visual name="stand">
+          <pose>0 0 0.125 0 0 0</pose>
+          <geometry><box><size>0.26 0.12 0.25</size></box></geometry>
+          <material><ambient>0.3 0.3 0.35 1</ambient><diffuse>0.3 0.3 0.35 1</diffuse></material>
+        </visual>
+        <visual name="marker_plate">
+          <pose>0 -0.061 0.15 0 0 0</pose>
+          <geometry><box><size>0.22 0.002 0.22</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+            <pbr><metal><albedo_map>/home/arc_aiml/AutonomousBot_ws/src/assessment_launch/textures/marker_3.png</albedo_map></metal></pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Marker 4: Aisle 3 West Entrance Marker (Facing West on Pedestal Stand) -->
+    <model name="aruco_marker_4">
+      <static>true</static>
+      <pose>-2.2 0.25 0 0 0 0</pose>
+      <link name="link">
+        <visual name="stand">
+          <pose>0 0 0.125 0 0 0</pose>
+          <geometry><box><size>0.12 0.26 0.25</size></box></geometry>
+          <material><ambient>0.3 0.3 0.35 1</ambient><diffuse>0.3 0.3 0.35 1</diffuse></material>
+        </visual>
+        <visual name="marker_plate">
+          <pose>-0.061 0 0.15 0 0 1.5708</pose>
+          <geometry><box><size>0.22 0.002 0.22</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+            <pbr><metal><albedo_map>/home/arc_aiml/AutonomousBot_ws/src/assessment_launch/textures/marker_4.png</albedo_map></metal></pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Marker 5: Lane 2-3 Mid Corridor Guide (Facing West on East Wall Plaque) -->
+    <model name="aruco_marker_5">
+      <static>true</static>
+      <pose>2.94 0.25 0 0 0 0</pose>
+      <link name="link">
+        <visual name="wall_plaque">
+          <pose>0 0 0.15 0 0 0</pose>
+          <geometry><box><size>0.02 0.26 0.26</size></box></geometry>
+          <material><ambient>0.25 0.25 0.28 1</ambient><diffuse>0.25 0.25 0.28 1</diffuse></material>
+        </visual>
+        <visual name="marker_plate">
+          <pose>-0.011 0 0.15 0 0 1.5708</pose>
+          <geometry><box><size>0.22 0.002 0.22</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+            <pbr><metal><albedo_map>/home/arc_aiml/AutonomousBot_ws/src/assessment_launch/textures/marker_5.png</albedo_map></metal></pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Marker 6: East Aisle 3 Exit Marker (Facing South on Pedestal Stand) -->
+    <model name="aruco_marker_6">
+      <static>true</static>
+      <pose>1.8 0.84 0 0 0 0</pose>
+      <link name="link">
+        <visual name="stand">
+          <pose>0 0 0.125 0 0 0</pose>
+          <geometry><box><size>0.26 0.12 0.25</size></box></geometry>
+          <material><ambient>0.3 0.3 0.35 1</ambient><diffuse>0.3 0.3 0.35 1</diffuse></material>
+        </visual>
+        <visual name="marker_plate">
+          <pose>0 -0.061 0.15 0 0 0</pose>
+          <geometry><box><size>0.22 0.002 0.22</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+            <pbr><metal><albedo_map>/home/arc_aiml/AutonomousBot_ws/src/assessment_launch/textures/marker_6.png</albedo_map></metal></pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Marker 7: Aisle 2 East Entrance Marker (Facing East on Pedestal Stand) -->
+    <model name="aruco_marker_7">
+      <static>true</static>
+      <pose>1.8 1.75 0 0 0 0</pose>
+      <link name="link">
+        <visual name="stand">
+          <pose>0 0 0.125 0 0 0</pose>
+          <geometry><box><size>0.12 0.26 0.25</size></box></geometry>
+          <material><ambient>0.3 0.3 0.35 1</ambient><diffuse>0.3 0.3 0.35 1</diffuse></material>
+        </visual>
+        <visual name="marker_plate">
+          <pose>0.061 0 0.15 0 0 -1.5708</pose>
+          <geometry><box><size>0.22 0.002 0.22</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+            <pbr><metal><albedo_map>/home/arc_aiml/AutonomousBot_ws/src/assessment_launch/textures/marker_7.png</albedo_map></metal></pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Marker 8: Lane 1-2 Mid Corridor Guide (Facing East on West Wall Plaque) -->
+    <model name="aruco_marker_8">
+      <static>true</static>
+      <pose>-2.94 1.75 0 0 0 0</pose>
+      <link name="link">
+        <visual name="wall_plaque">
+          <pose>0 0 0.15 0 0 0</pose>
+          <geometry><box><size>0.02 0.26 0.26</size></box></geometry>
+          <material><ambient>0.25 0.25 0.28 1</ambient><diffuse>0.25 0.25 0.28 1</diffuse></material>
+        </visual>
+        <visual name="marker_plate">
+          <pose>0.011 0 0.15 0 0 -1.5708</pose>
+          <geometry><box><size>0.22 0.002 0.22</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+            <pbr><metal><albedo_map>/home/arc_aiml/AutonomousBot_ws/src/assessment_launch/textures/marker_8.png</albedo_map></metal></pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Marker 9: West Aisle 2 Exit Marker (Facing South on Pedestal Stand) -->
+    <model name="aruco_marker_9">
+      <static>true</static>
+      <pose>-2.2 2.34 0 0 0 0</pose>
+      <link name="link">
+        <visual name="stand">
+          <pose>0 0 0.125 0 0 0</pose>
+          <geometry><box><size>0.26 0.12 0.25</size></box></geometry>
+          <material><ambient>0.3 0.3 0.35 1</ambient><diffuse>0.3 0.3 0.35 1</diffuse></material>
+        </visual>
+        <visual name="marker_plate">
+          <pose>0 -0.061 0.15 0 0 0</pose>
+          <geometry><box><size>0.22 0.002 0.22</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+            <pbr><metal><albedo_map>/home/arc_aiml/AutonomousBot_ws/src/assessment_launch/textures/marker_9.png</albedo_map></metal></pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Marker 10: North Corridor Entrance Marker (Facing West on Pedestal Stand) -->
+    <model name="aruco_marker_10">
+      <static>true</static>
+      <pose>-2.2 3.25 0 0 0 0</pose>
+      <link name="link">
+        <visual name="stand">
+          <pose>0 0 0.125 0 0 0</pose>
+          <geometry><box><size>0.12 0.26 0.25</size></box></geometry>
+          <material><ambient>0.3 0.3 0.35 1</ambient><diffuse>0.3 0.3 0.35 1</diffuse></material>
+        </visual>
+        <visual name="marker_plate">
+          <pose>-0.061 0 0.15 0 0 1.5708</pose>
+          <geometry><box><size>0.22 0.002 0.22</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+            <pbr><metal><albedo_map>/home/arc_aiml/AutonomousBot_ws/src/assessment_launch/textures/marker_10.png</albedo_map></metal></pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Marker 11: Final Destination Marker (Facing West on East Wall Plaque) -->
+    <model name="aruco_marker_11">
+      <static>true</static>
+      <pose>2.94 3.25 0 0 0 0</pose>
+      <link name="link">
+        <visual name="wall_plaque">
+          <pose>0 0 0.15 0 0 0</pose>
+          <geometry><box><size>0.02 0.26 0.26</size></box></geometry>
+          <material><ambient>0.25 0.25 0.28 1</ambient><diffuse>0.25 0.25 0.28 1</diffuse></material>
+        </visual>
+        <visual name="marker_plate">
+          <pose>-0.011 0 0.15 0 0 1.5708</pose>
+          <geometry><box><size>0.22 0.002 0.22</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse>
+            <pbr><metal><albedo_map>/home/arc_aiml/AutonomousBot_ws/src/assessment_launch/textures/marker_11.png</albedo_map></metal></pbr>
           </material>
         </visual>
       </link>

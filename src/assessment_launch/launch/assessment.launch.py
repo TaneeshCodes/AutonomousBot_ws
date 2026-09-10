@@ -38,12 +38,13 @@ def generate_launch_description():
     nav2_bringup_dir = get_package_share_directory('nav2_bringup')
     assessment_launch_dir = get_package_share_directory('assessment_launch')
     models_dir = os.path.join(gazebo_dir, 'models')
+    textures_dir = os.path.join(assessment_launch_dir, 'textures')
 
-    # Environment variables for Gazebo model loading
-    set_tb3_model = SetEnvironmentVariable('TURTLEBOT3_MODEL', 'burger')
-    set_gz_resource = AppendEnvironmentVariable('GZ_SIM_RESOURCE_PATH', models_dir)
-    set_ign_resource = AppendEnvironmentVariable('IGN_GAZEBO_RESOURCE_PATH', models_dir)
-    set_sdf_path = AppendEnvironmentVariable('SDF_PATH', models_dir)
+    # Environment variables for Gazebo model and texture loading
+    set_tb3_model = SetEnvironmentVariable('TURTLEBOT3_MODEL', 'burger_cam')
+    set_gz_resource = AppendEnvironmentVariable('GZ_SIM_RESOURCE_PATH', f'{models_dir}:{textures_dir}')
+    set_ign_resource = AppendEnvironmentVariable('IGN_GAZEBO_RESOURCE_PATH', f'{models_dir}:{textures_dir}')
+    set_sdf_path = AppendEnvironmentVariable('SDF_PATH', f'{models_dir}:{textures_dir}')
 
     # Launch configurations
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
@@ -92,8 +93,8 @@ def generate_launch_description():
     )
 
     # 4. Direct Gazebo Spawner with explicit yaw orientation (-Y)
-    urdf_path = os.path.join(models_dir, 'turtlebot3_burger', 'model.sdf')
-    bridge_params = os.path.join(gazebo_dir, 'params', 'turtlebot3_burger_bridge.yaml')
+    urdf_path = os.path.join(models_dir, 'turtlebot3_burger_cam', 'model.sdf')
+    bridge_params = os.path.join(gazebo_dir, 'params', 'turtlebot3_burger_cam_bridge.yaml')
 
     start_gazebo_ros_spawner_cmd = Node(
         package='ros_gz_sim',
@@ -117,6 +118,14 @@ def generate_launch_description():
             '-p',
             f'config_file:={bridge_params}',
         ],
+        output='screen',
+    )
+
+    # Bridge camera image raw
+    start_gazebo_ros_image_bridge_cmd = Node(
+        package='ros_gz_image',
+        executable='image_bridge',
+        arguments=['/camera/image_raw'],
         output='screen',
     )
 
@@ -193,6 +202,7 @@ def generate_launch_description():
         gzclient_cmd,
         start_gazebo_ros_spawner_cmd,
         start_gazebo_ros_bridge_cmd,
+        start_gazebo_ros_image_bridge_cmd,
         robot_state_publisher_cmd,
         navigation_stack,
         rviz_cmd

@@ -15,6 +15,12 @@ setup(
         ('share/' + package_name + '/launch', ['launch/assessment.launch.py']),
         ('share/' + package_name + '/param', ['param/burger.yaml']),
         ('share/' + package_name + '/worlds', ['worlds/supermarket_arena.sdf']),
+        ('share/' + package_name + '/textures', [
+            'textures/marker_0.png', 'textures/marker_1.png', 'textures/marker_2.png',
+            'textures/marker_3.png', 'textures/marker_4.png', 'textures/marker_5.png',
+            'textures/marker_6.png', 'textures/marker_7.png', 'textures/marker_8.png',
+            'textures/marker_9.png', 'textures/marker_10.png', 'textures/marker_11.png',
+        ]),
         ('share/' + package_name + '/maps', [
             'maps/map.yaml',
             'maps/map.pgm',

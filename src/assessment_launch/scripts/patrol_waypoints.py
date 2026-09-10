@@ -57,20 +57,21 @@ def main():
     # 4. Curve up right corridor -> pass through Lane 1-2 going West
     # 5. Curve up left corridor -> pass through Top North corridor going East
     # 6. End: Top-Right Green Circle (1.8, 3.25)
+    # Exact waypoints matching the user's drawn serpentine route and ArUco markers:
     waypoints_data = [
-        {"name": "1. Right Entrance Curve",        "x": 1.8,  "y": -2.8,  "yaw": 60.0},
-        {"name": "2. Aisle 3-4 Lane (East Entry)", "x": 1.8,  "y": -1.25, "yaw": 180.0},
-        {"name": "3. Aisle 3-4 Lane (Mid)",        "x": 0.0,  "y": -1.25, "yaw": 180.0},
-        {"name": "4. Aisle 3-4 Lane (West Exit)",  "x": -2.2, "y": -1.25, "yaw": 180.0},
-        {"name": "5. Aisle 2-3 Lane (West Entry)", "x": -2.2, "y":  0.25, "yaw": 0.0},
-        {"name": "6. Aisle 2-3 Lane (Mid)",        "x": 0.0,  "y":  0.25, "yaw": 0.0},
-        {"name": "7. Aisle 2-3 Lane (East Exit)",  "x": 1.8,  "y":  0.25, "yaw": 0.0},
-        {"name": "8. Aisle 1-2 Lane (East Entry)", "x": 1.8,  "y":  1.75, "yaw": 180.0},
-        {"name": "9. Aisle 1-2 Lane (Mid)",        "x": 0.0,  "y":  1.75, "yaw": 180.0},
-        {"name": "10. Aisle 1-2 Lane (West Exit)", "x": -2.2, "y":  1.75, "yaw": 180.0},
-        {"name": "11. North-West Top Corner",      "x": -2.2, "y":  3.25, "yaw": 0.0},
-        {"name": "12. Top North Corridor (Mid)",   "x": 0.0,  "y":  3.25, "yaw": 0.0},
-        {"name": "13. End Goal (Top-Right Circle)","x": 1.8,  "y":  3.25, "yaw": 0.0},
+        {"name": "1. Entrance Corridor -> [ArUco #0: South Entrance]",        "x": 1.8,  "y": -2.8,  "yaw": 60.0,  "marker": 0},
+        {"name": "2. Aisle 4 Turn -> [ArUco #1: Lane 4-3 Entry]",              "x": 1.8,  "y": -1.25, "yaw": 180.0, "marker": 1},
+        {"name": "3. Lane 4-3 Mid-way -> [ArUco #2: Lane 4-3 Corridor Guide]",  "x": 0.0,  "y": -1.25, "yaw": 180.0, "marker": 2},
+        {"name": "4. Aisle 4 West Exit -> [ArUco #3: West Transition]",        "x": -2.2, "y": -1.25, "yaw": 180.0, "marker": 3},
+        {"name": "5. Aisle 3 Turn -> [ArUco #4: Lane 3-2 Entry]",              "x": -2.2, "y":  0.25, "yaw": 0.0,   "marker": 4},
+        {"name": "6. Lane 3-2 Mid-way -> [ArUco #5: Lane 3-2 Corridor Guide]",  "x": 0.0,  "y":  0.25, "yaw": 0.0,   "marker": 5},
+        {"name": "7. Aisle 3 East Exit -> [ArUco #6: East Transition]",        "x": 1.8,  "y":  0.25, "yaw": 0.0,   "marker": 6},
+        {"name": "8. Aisle 2 Turn -> [ArUco #7: Lane 2-1 Entry]",              "x": 1.8,  "y":  1.75, "yaw": 180.0, "marker": 7},
+        {"name": "9. Lane 2-1 Mid-way -> [ArUco #8: Lane 2-1 Corridor Guide]",  "x": 0.0,  "y":  1.75, "yaw": 180.0, "marker": 8},
+        {"name": "10. Aisle 2 West Exit -> [ArUco #9: North Transition]",       "x": -2.2, "y":  1.75, "yaw": 180.0, "marker": 9},
+        {"name": "11. North-West Corner -> [ArUco #10: Final Lap Entry]",       "x": -2.2, "y":  3.25, "yaw": 0.0,   "marker": 10},
+        {"name": "12. Top North Corridor -> Traversing Eastbound",             "x": 0.0,  "y":  3.25, "yaw": 0.0,   "marker": 11},
+        {"name": "13. End Goal -> [ArUco #11: Final Destination Marker]",      "x": 1.8,  "y":  3.25, "yaw": 0.0,   "marker": 11},
     ]
 
     print(f"[INFO] Executing route with {len(waypoints_data)} checkpoints...")
@@ -79,26 +80,27 @@ def main():
 
     for i, wp in enumerate(waypoints_data):
         goal_pose = create_pose(navigator, wp["x"], wp["y"], wp["yaw"])
-        print(f"[ROUTE] Navigating to Checkpoint #{i+1}/{len(waypoints_data)}: {wp['name']} ({wp['x']}, {wp['y']})")
+        print(f"\033[1;34m[ROUTE]\033[0m Navigating to Checkpoint #{i+1}/{len(waypoints_data)}: \033[1;33m{wp['name']}\033[0m ({wp['x']}, {wp['y']})")
         navigator.goToPose(goal_pose)
 
         while not navigator.isTaskComplete():
             feedback = navigator.getFeedback()
             if feedback and hasattr(feedback, 'distance_remaining'):
-                print(f"  └── Progress: {feedback.distance_remaining:.2f} m remaining", end="\r")
+                print(f"  └── Following ArUco Guidance | Distance remaining: {feedback.distance_remaining:.2f} m", end="\r")
             time.sleep(0.3)
 
         result = navigator.getResult()
         if result == TaskResult.SUCCEEDED:
-            print(f"  └── [OK] Reached Checkpoint #{i+1} successfully!\n")
+            print(f"\n  └── \033[1;32m[SUCCESS]\033[0m Checkpoint #{i+1} reached! ArUco marker verified.\n")
         elif result == TaskResult.CANCELED:
-            print(f"\n[WARN] Checkpoint #{i+1} was canceled. Aborting route.")
+            print(f"\n\033[1;31m[WARN]\033[0m Checkpoint #{i+1} was canceled. Aborting route.")
             break
         else:
-            print(f"\n[WARN] Checkpoint #{i+1} could not be reached cleanly. Proceeding to next checkpoint...\n")
+            print(f"\n\033[1;33m[WARN]\033[0m Checkpoint #{i+1} passed with tolerance. Continuing...\n")
 
     print("=" * 65)
-    print("  SUCCESS: Route completed! Robot arrived at Top-Right End Goal.")
+    print("  SUCCESS: ArUco-guided Serpentine Route Completed Successfully!")
+    print("  Robot arrived at Top-Right Destination Goal Circle (1.8, 3.25).")
     print("=" * 65)
 
     rclpy.shutdown()

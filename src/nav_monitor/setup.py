@@ -27,6 +27,7 @@ setup(
     entry_points={
         'console_scripts': [
             'monitor_node = nav_monitor.monitor:main',
+            'aruco_detector = nav_monitor.aruco_detector:main',
         ],
     },
 )
